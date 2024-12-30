@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import '../../css/Style.css';
 import {Bidtable, MyBidstable, Loader} from '../../components/index';
 
+
 const Mybidding = () => {
   const { connectWallet, currentAccount, countbids } = useContext(TransactionContext);
   const { bidsData, getMyBids } = useContext(BidderContext);
@@ -33,19 +34,44 @@ const Mybidding = () => {
   }
 
   return (
-    <>
+    <div className='flex flex-col p-10 m-16 '>
      <div className='text-center'>
-        <button
-            data-testid="wallet"
-            onClick={connectWallet}
-            className='bg-gradient-to-r from-black via-gray-500 to-black transition duration-150 ease-out hover:ease-in
-            p-4 px-6 rounded-full text-white text-xl mt-36 mb-10 hover:brightness-125 transition duration-150 ease-in-out shadow-lg'>
-            Connect Wallet
-        </button>
+      
+      <button
+    data-testid="wallet"
+    onClick={connectWallet}
+
+      className="bg-slate-800 mb-4 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6  text-white inline-block">
+  <span className="absolute inset-0 overflow-hidden rounded-full">
+    <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+  </span>
+  <div className="relative flex space-x-2 items-center z-10 rounded-full bg-zinc-950 py-0.5 px-4 ring-1 ring-white/10 ">
+    <span>
+      Connect Wallet
+    </span>
+    <svg
+      fill="none"
+      height="16"
+      viewBox="0 0 24 24"
+      width="16"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.75 8.75L14.25 12L10.75 15.25"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+    </svg>
+  </div>
+  <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40" />
+      </button>
+
       </div>
 
       <div className='bg-white'>
-         <p className='text-center text-gray-400 mb-16'>connect to your wallet, to see your IP bidders'</p>
+         <p className='text-center animate-pulse text-slate-700 mb-16'>Connect to your wallet, to see your IP bidders'</p>
       </div>
 
       <div>
@@ -53,9 +79,11 @@ const Mybidding = () => {
       </div>
 
       <div className='flex justify-around'>
-      <p className='mx-4 py-4 text-4xl cursor-pointer'>Bids</p>
+        <div>
+           <p className='mx-4 py-4 text-4xl cursor-pointer'>Bids</p>
+        </div>   
       <div>
-        <p>Total bids:</p>
+        <p className='text 2xl'>Total bids:</p>
       </div>
       </div>
       
@@ -67,9 +95,11 @@ const Mybidding = () => {
         onChange={(e) => setQuery(e.target.value)}
       />
      </div>
+     <div className='flex flex-col items-center justify-center'>
       {bidsData.length == 0 ? <p className='text-center'>You have not made any bids, yet</p>:null}
       {bidsData.length != 0 ? <MyBidstable data={search(bidsData)}/> : <Loader/>}
-    </>
+      </div>
+    </div>
   )
 }
 

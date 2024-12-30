@@ -3,6 +3,8 @@ import ReactPaginate from 'react-paginate';
 import '../../css/Style.css';
 import { TransactionContext } from '../../context/TransactionContext';
 import { BidderContext } from '../../context/BidderContext';
+import { CardSpotlight } from '../CardCmpnt/Cardd';
+
 
 const MyBidstable = ({data}) => {
   const { depositBid, refundBid, bidData} = useContext(BidderContext);
@@ -25,57 +27,67 @@ const MyBidstable = ({data}) => {
   };
   
   return (
-    <div className='mx-20 mb-32'>
-      <table className='table table-striped'>
-        <thead>
-          <tr className=''>
-            <th className='text-gray-900'>ID</th>
-            <th className='text-gray-900'> Ip Name </th>
-            <th className='text-gray-900'> Bidder Address </th>
-            <th className='text-gray-900'> value </th>
-            <th className='text-gray-900'> Transfer Ownership</th>
-            <th className='text-gray-900'> Bidding Acceptance</th>
-            <th className='text-gray-900'> Bid Date</th>
-          </tr>
-        </thead>
-        <tbody className='bg-gray-100'>
-
-        {data.map((item,index) => ( 
-            <tr key={index}>
-              <td >{index}</td>
-              <td >{item.ownerIPname}</td>    
-              <td className='text-black'>{item.bidderAddress}</td>             
-              <td>{item.bidValue} ether</td>
-              <td className='text-center'>
-                <button 
-                className='bg-black text-white py-1 px-6 rounded'
-                onClick={(event) => refundBid(item.bidValue, item.tokenID, event)} 
-                >
-                Refund
-                </button>
-              </td>
-              <td className='text-center'>{item.bidAccepted}</td>
-              <td>{item.timestamp}</td>
-            </tr>
-         ))
-         }         
-        </tbody>
-      </table> 
-      <ReactPaginate
-        breakLabel="..."
-        nextLabel="next >"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={1}
-        pageCount={pageCount}
-        previousLabel="< previous"
-        renderOnZeroPageCount={null}
-        containerClassName="pagination"
-        pageLinkClassName="page-num"
-        previousLinkClassName="page-num"
-        nextLinkClassName="page-num"
-        activeLinkClassName="active"
-      />
-     </div>
+    <CardSpotlight className="h-auto w-full mx-auto px-4 py-6">
+      <div className="relative z-20">
+        <p className="text-xl font-bold mt-2 text-white">Bid Details</p>
+        <p className="text-neutral-300 mt-4">
+          Below is the list of bids placed on your IPs. You can refund, view acceptance status, and manage bid ownership.
+        </p>
+        <div className="mt-6">
+          <div className="overflow-x-auto">
+            <table className="table-auto w-full text-left border-collapse border border-gray-200 bg-white">
+              <thead>
+                <tr className="bg-gray-800 text-white">
+                  <th className="px-4 py-2">ID</th>
+                  <th className="px-4 py-2">IP Name</th>
+                  <th className="px-4 py-2">Bidder Address</th>
+                  <th className="px-4 py-2">Value</th>
+                  <th className="px-4 py-2">Transfer Ownership</th>
+                  <th className="px-4 py-2">Bidding Acceptance</th>
+                  <th className="px-4 py-2">Bid Date</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {data.map((item, index) => (
+                  <tr key={index} className="hover:bg-gray-100">
+                    <td className="px-4 py-2">{index || "index"}</td>
+                    <td className="px-4 py-2">{item.ownerIPname || "owner name"}</td>
+                    <td className="px-4 py-2 text-gray-700">{item.bidderAddress || " address"}</td>
+                    <td className="px-4 py-2">{item.bidValue || " bidvalue"} ether</td>
+                    <td className="px-4 py-2 text-center">
+                      <button
+                        className="bg-black text-white py-1 px-4 rounded"
+                        onClick={(event) => refundBid(item.bidValue, item.tokenID, event)}
+                      >
+                        Refund
+                      </button>
+                    </td>
+                    <td className="px-4 py-2 text-center">{item.bidAccepted || "accepted"}</td>
+                    <td className="px-4 py-2">{item.timestamp || " timestamp"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="mt-4">
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel="next >"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={1}
+              pageCount={pageCount}
+              previousLabel="< previous"
+              renderOnZeroPageCount={null}
+              containerClassName="pagination flex justify-center space-x-2 mt-4"
+              pageLinkClassName="page-num px-3 py-1 border rounded text-gray-700 hover:bg-gray-200"
+              previousLinkClassName="page-num px-3 py-1 border rounded text-gray-700 hover:bg-gray-200"
+              nextLinkClassName="page-num px-3 py-1 border rounded text-gray-700 hover:bg-gray-200"
+              activeLinkClassName="active bg-gray-800 text-white"
+            />
+          </div>
+        </div>
+      </div>
+    </CardSpotlight>
   )
 }
 

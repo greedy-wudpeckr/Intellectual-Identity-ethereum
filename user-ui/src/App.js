@@ -11,7 +11,8 @@ import {
   Mint, 
   Status, 
   Profile,
-  NftDetails
+  NftDetails,
+  MyBidstable
 }
 from "./components/index";
 import Mybidding from "./pages/Mybidding/Mybidding";
@@ -52,6 +53,7 @@ function App() {
             <Route path='/mint/:id/:address' element={<Mint />} />
             <Route path='/mynfts' element={<Profile/>}/>
             <Route path='/mynftdetail/:tokenId' element={<NftDetails/>}/>
+            <Route path="/cards" element={<MyBidstable/>} />
         </Routes>
       </div>
         <Footer/>
